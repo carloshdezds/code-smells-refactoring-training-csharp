@@ -4,19 +4,13 @@ namespace SmellyMarsRover
 {
     public class Rover
     {
-        private int _y;
-        private int _x;
         private Direction _direction;
+        private Coordinates _coordinates;
 
         public Rover(int x, int y, string direction)
         {
-            Direction = direction;
-            _y = y;
-            _x = x;
-        }
-
-        private string Direction {
-            set => _direction = new Direction(value);
+            _direction = new Direction(direction);
+            _coordinates = new Coordinates(x, y);
         }
 
         public void Receive(string commandsSequence)
@@ -30,19 +24,19 @@ namespace SmellyMarsRover
                     // Rotate Rover Right
                     if (_direction.IsFacingNorth())
                     {
-                        Direction = "E";
+                        _direction = new Direction("E");
                     }
                     else if (_direction.IsFacingSouth())
                     {
-                        Direction = "W";
+                        _direction = new Direction("W");
                     }
                     else if (_direction.IsFacingWest())
                     {
-                        Direction = "N";
+                        _direction = new Direction("N");
                     }
                     else
                     {
-                        Direction = "S";
+                        _direction = new Direction("S");
                     }
                 }
                 else if (command.Equals("l"))
@@ -50,19 +44,19 @@ namespace SmellyMarsRover
                     // Rotate Rover Left
                     if (_direction.IsFacingNorth())
                     {
-                        Direction = "W";
+                        _direction = new Direction("W");
                     }
                     else if (_direction.IsFacingSouth())
                     {
-                        Direction = "E";
+                        _direction = new Direction("E");
                     }
                     else if (_direction.IsFacingWest())
                     {
-                        Direction = "S";
+                        _direction = new Direction("S");
                     }
                     else
                     {
-                        Direction = "N";
+                        _direction = new Direction("N");
                     }
                 }
                 else
@@ -79,53 +73,49 @@ namespace SmellyMarsRover
 
                     if (_direction.IsFacingNorth())
                     {
-                        _y += displacement;
+                        _coordinates = new Coordinates(_coordinates.x, _coordinates.y + displacement);
                     }
                     else if (_direction.IsFacingSouth())
                     {
-                        _y -= displacement;
+                        _coordinates = new Coordinates(_coordinates.x, _coordinates.y - displacement);
                     }
                     else if (_direction.IsFacingWest())
                     {
-                        _x -= displacement;
+                        _coordinates = new Coordinates(_coordinates.x - displacement, _coordinates.y);
                     }
                     else
                     {
-                        _x += displacement;
+                        _coordinates = new Coordinates(_coordinates.x + displacement, _coordinates.y);
                     }
                 }
             }
         }
 
-        protected bool Equals(Rover other) {
-            return _y == other._y && _x == other._x && _direction.Equals(other._direction);
+        protected bool Equals(Rover other)
+        {
+            return Equals(_direction, other._direction) && Equals(_coordinates, other._coordinates);
         }
 
-        public override bool Equals(object obj) {
-            if (obj is null) {
-                return false;
-            }
-
-            if (ReferenceEquals(this, obj)) {
-                return true;
-            }
-
-            if (obj.GetType() != GetType()) {
-                return false;
-            }
-
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
             return Equals((Rover)obj);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(_y, _x, _direction);
+            return HashCode.Combine(_direction, _coordinates);
         }
 
-        public override string ToString() {
-            return $"{nameof(_y)}: {_y}, {nameof(_x)}: {_x}, {nameof(_direction)}: {_direction}";
+        public override string ToString()
+        {
+            return $"{nameof(_direction)}: {_direction}, {nameof(_coordinates)}: {_coordinates}";
         }
     }
+
+    internal record Coordinates(int x, int y);
 
     internal record Direction(string Value)
     {
