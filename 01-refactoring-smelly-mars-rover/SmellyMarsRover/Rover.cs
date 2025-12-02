@@ -33,15 +33,15 @@ namespace SmellyMarsRover
                 if (command.Equals("r"))
                 {
                     // Rotate Rover Right
-                    if (Direction.Equals("N"))
+                    if (IsFacingNorth())
                     {
                         Direction = "E";
                     }
-                    else if (Direction.Equals("S"))
+                    else if (IsFacingSouth())
                     {
                         Direction = "W";
                     }
-                    else if (Direction.Equals("W"))
+                    else if (IsFacingWest())
                     {
                         Direction = "N";
                     }
@@ -102,6 +102,18 @@ namespace SmellyMarsRover
             }
         }
 
+        private bool IsFacingWest() {
+            return _directionType.Value.Equals("W");
+        }
+
+        private bool IsFacingSouth() {
+            return _directionType.Value.Equals("S");
+        }
+
+        private bool IsFacingNorth() {
+            return _directionType.Value.Equals("N");
+        }
+
         protected bool Equals(Rover other) {
             return _y == other._y && _x == other._x && _directionType.Equals(other._directionType);
         }
@@ -134,7 +146,8 @@ namespace SmellyMarsRover
 
     struct Direction {
         private readonly string value;
-
+        public string Value => value;
+        
         public Direction(string value) {
             this.value = value;
         }
