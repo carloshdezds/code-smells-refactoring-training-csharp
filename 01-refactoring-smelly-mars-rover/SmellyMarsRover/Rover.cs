@@ -6,7 +6,7 @@ namespace SmellyMarsRover
     {
         private int _y;
         private int _x;
-        private Direction _directionType;
+        private Direction _direction;
 
         public Rover(int x, int y, string direction)
         {
@@ -16,7 +16,7 @@ namespace SmellyMarsRover
         }
 
         private string Direction {
-            set => _directionType = new Direction(value);
+            set => _direction = new Direction(value);
         }
 
         public void Receive(string commandsSequence)
@@ -98,19 +98,19 @@ namespace SmellyMarsRover
         }
 
         private bool IsFacingWest() {
-            return _directionType.Value.Equals("W");
+            return _direction.Value.Equals("W");
         }
 
         private bool IsFacingSouth() {
-            return _directionType.Value.Equals("S");
+            return _direction.Value.Equals("S");
         }
 
         private bool IsFacingNorth() {
-            return _directionType.Value.Equals("N");
+            return _direction.Value.Equals("N");
         }
 
         protected bool Equals(Rover other) {
-            return _y == other._y && _x == other._x && _directionType.Equals(other._directionType);
+            return _y == other._y && _x == other._x && _direction.Equals(other._direction);
         }
 
         public override bool Equals(object obj) {
@@ -131,11 +131,11 @@ namespace SmellyMarsRover
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(_y, _x, _directionType);
+            return HashCode.Combine(_y, _x, _direction);
         }
 
         public override string ToString() {
-            return $"{nameof(_y)}: {_y}, {nameof(_x)}: {_x}, {nameof(_directionType)}: {_directionType}";
+            return $"{nameof(_y)}: {_y}, {nameof(_x)}: {_x}, {nameof(_direction)}: {_direction}";
         }
     }
 
