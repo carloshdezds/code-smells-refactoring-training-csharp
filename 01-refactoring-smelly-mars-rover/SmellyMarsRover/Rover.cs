@@ -53,7 +53,7 @@ namespace SmellyMarsRover
                 else if (command.Equals("l"))
                 {
                     // Rotate Rover Left
-                    if (Direction.Equals("N"))
+                    if (IsFacingNorth())
                     {
                         Direction = "W";
                     }
@@ -82,7 +82,7 @@ namespace SmellyMarsRover
 
                     var displacement = displacement1;
 
-                    if (Direction.Equals("N"))
+                    if (IsFacingNorth())
                     {
                         _y += displacement;
                     }
