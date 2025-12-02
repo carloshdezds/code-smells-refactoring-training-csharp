@@ -28,15 +28,15 @@ namespace SmellyMarsRover
                 if (command.Equals("r"))
                 {
                     // Rotate Rover Right
-                    if (IsFacingNorth())
+                    if (_direction.IsFacingNorth())
                     {
                         Direction = "E";
                     }
-                    else if (IsFacingSouth())
+                    else if (_direction.IsFacingSouth())
                     {
                         Direction = "W";
                     }
-                    else if (IsFacingWest())
+                    else if (_direction.IsFacingWest())
                     {
                         Direction = "N";
                     }
@@ -48,15 +48,15 @@ namespace SmellyMarsRover
                 else if (command.Equals("l"))
                 {
                     // Rotate Rover Left
-                    if (IsFacingNorth())
+                    if (_direction.IsFacingNorth())
                     {
                         Direction = "W";
                     }
-                    else if (IsFacingSouth())
+                    else if (_direction.IsFacingSouth())
                     {
                         Direction = "E";
                     }
-                    else if (IsFacingWest())
+                    else if (_direction.IsFacingWest())
                     {
                         Direction = "S";
                     }
@@ -77,15 +77,15 @@ namespace SmellyMarsRover
 
                     var displacement = displacement1;
 
-                    if (IsFacingNorth())
+                    if (_direction.IsFacingNorth())
                     {
                         _y += displacement;
                     }
-                    else if (IsFacingSouth())
+                    else if (_direction.IsFacingSouth())
                     {
                         _y -= displacement;
                     }
-                    else if (IsFacingWest())
+                    else if (_direction.IsFacingWest())
                     {
                         _x -= displacement;
                     }
@@ -95,18 +95,6 @@ namespace SmellyMarsRover
                     }
                 }
             }
-        }
-
-        private bool IsFacingWest() {
-            return _direction.Value.Equals("W");
-        }
-
-        private bool IsFacingSouth() {
-            return _direction.Value.Equals("S");
-        }
-
-        private bool IsFacingNorth() {
-            return _direction.Value.Equals("N");
         }
 
         protected bool Equals(Rover other) {
@@ -139,5 +127,21 @@ namespace SmellyMarsRover
         }
     }
 
-    internal record Direction(string Value);
+    internal record Direction(string Value)
+    {
+        public bool IsFacingWest()
+        {
+            return Value.Equals("W");
+        }
+
+        public bool IsFacingSouth()
+        {
+            return Value.Equals("S");
+        }
+
+        public bool IsFacingNorth()
+        {
+            return Value.Equals("N");
+        }
+    }
 }
