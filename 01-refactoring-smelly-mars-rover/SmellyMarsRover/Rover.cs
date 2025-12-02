@@ -16,9 +16,7 @@ namespace SmellyMarsRover
         }
 
         private string Direction {
-            set {
-                _directionType = new Direction(value);
-            }
+            set => _directionType = new Direction(value);
         }
 
         public void Receive(string commandsSequence)
