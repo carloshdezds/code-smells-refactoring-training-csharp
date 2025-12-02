@@ -139,12 +139,5 @@ namespace SmellyMarsRover
         }
     }
 
-    struct Direction {
-        private readonly string value;
-        public string Value => value;
-        
-        public Direction(string value) {
-            this.value = value;
-        }
-    }
+    internal record Direction(string Value);
 }
