@@ -4,7 +4,6 @@ namespace SmellyMarsRover
 {
     public class Rover
     {
-        private string _direction;
         private int _y;
         private int _x;
         private Direction _directionType;
@@ -17,9 +16,7 @@ namespace SmellyMarsRover
         }
 
         private string Direction {
-            get => _direction;
             set {
-                _direction = value;
                 _directionType = new Direction(value);
             }
         }
