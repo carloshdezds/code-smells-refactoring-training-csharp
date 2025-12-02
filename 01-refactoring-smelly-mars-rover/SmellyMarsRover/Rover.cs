@@ -61,7 +61,7 @@ namespace SmellyMarsRover
                     {
                         Direction = "E";
                     }
-                    else if (Direction.Equals("W"))
+                    else if (IsFacingWest())
                     {
                         Direction = "S";
                     }
@@ -90,7 +90,7 @@ namespace SmellyMarsRover
                     {
                         _y -= displacement;
                     }
-                    else if (Direction.Equals("W"))
+                    else if (IsFacingWest())
                     {
                         _x -= displacement;
                     }
