@@ -73,19 +73,19 @@ namespace SmellyMarsRover
 
                     if (_direction.IsFacingNorth())
                     {
-                        _coordinates = new Coordinates(_coordinates.x, _coordinates.y + displacement);
+                        _coordinates = _coordinates.MoveAlongY(displacement);
                     }
                     else if (_direction.IsFacingSouth())
                     {
-                        _coordinates = new Coordinates(_coordinates.x, _coordinates.y - displacement);
+                        _coordinates = _coordinates.MoveAlongY(- displacement);
                     }
                     else if (_direction.IsFacingWest())
                     {
-                        _coordinates = new Coordinates(_coordinates.x - displacement, _coordinates.y);
+                        _coordinates = _coordinates.MoveAlongX(-displacement);
                     }
                     else
                     {
-                        _coordinates = new Coordinates(_coordinates.x + displacement, _coordinates.y);
+                        _coordinates = _coordinates.MoveAlongX(displacement);
                     }
                 }
             }
@@ -112,26 +112,6 @@ namespace SmellyMarsRover
         public override string ToString()
         {
             return $"{nameof(_direction)}: {_direction}, {nameof(_coordinates)}: {_coordinates}";
-        }
-    }
-
-    internal record Coordinates(int x, int y);
-
-    internal record Direction(string Value)
-    {
-        public bool IsFacingWest()
-        {
-            return Value.Equals("W");
-        }
-
-        public bool IsFacingSouth()
-        {
-            return Value.Equals("S");
-        }
-
-        public bool IsFacingNorth()
-        {
-            return Value.Equals("N");
         }
     }
 }
