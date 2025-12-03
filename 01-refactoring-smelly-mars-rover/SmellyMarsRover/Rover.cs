@@ -21,42 +21,26 @@ namespace SmellyMarsRover
 
                 if (command.Equals("r"))
                 {
-                    // Rotate Rover Right
-                    if (_direction.IsFacingNorth())
-                    {
-                        _direction = new Direction("E");
-                    }
-                    else if (_direction.IsFacingSouth())
-                    {
-                        _direction = new Direction("W");
-                    }
-                    else if (_direction.IsFacingWest())
-                    {
-                        _direction = new Direction("N");
-                    }
-                    else
-                    {
-                        _direction = new Direction("S");
-                    }
+                    _direction = _direction.RotateRight();
                 }
                 else if (command.Equals("l"))
                 {
                     // Rotate Rover Left
                     if (_direction.IsFacingNorth())
                     {
-                        _direction = new Direction("W");
+                        _direction = Direction.Create("W");
                     }
                     else if (_direction.IsFacingSouth())
                     {
-                        _direction = new Direction("E");
+                        _direction = Direction.Create("E");
                     }
                     else if (_direction.IsFacingWest())
                     {
-                        _direction = new Direction("S");
+                        _direction = Direction.Create("S");
                     }
                     else
                     {
-                        _direction = new Direction("N");
+                        _direction = Direction.Create("N");
                     }
                 }
                 else
@@ -77,7 +61,7 @@ namespace SmellyMarsRover
                     }
                     else if (_direction.IsFacingSouth())
                     {
-                        _coordinates = _coordinates.MoveAlongY(- displacement);
+                        _coordinates = _coordinates.MoveAlongY(-displacement);
                     }
                     else if (_direction.IsFacingWest())
                     {
