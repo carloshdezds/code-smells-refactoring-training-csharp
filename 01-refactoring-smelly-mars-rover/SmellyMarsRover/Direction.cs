@@ -1,28 +1,11 @@
-using System;
-
 namespace SmellyMarsRover
 {
-    internal abstract record Direction(string Value)
+    internal abstract record Direction
     {
         private const string NORTH = "N";
         private const string SOUTH = "S";
         private const string WEST = "W";
         private const string EAST = "E";
-
-        public bool IsFacingWest()
-        {
-            return Value.Equals(WEST);
-        }
-
-        public bool IsFacingSouth()
-        {
-            return Value.Equals(SOUTH);
-        }
-
-        public bool IsFacingNorth()
-        {
-            return Value.Equals(NORTH);
-        }
 
         public static Direction Create(string directionEncoding)
         {
@@ -50,7 +33,7 @@ namespace SmellyMarsRover
 
         public abstract Coordinates Displace(Coordinates coordinates, int displacement);
 
-        internal record North() : Direction(NORTH)
+        internal record North : Direction
         {
             public override Direction RotateRight()
             {
@@ -68,7 +51,7 @@ namespace SmellyMarsRover
             }
         }
 
-        internal record South() : Direction(SOUTH)
+        internal record South : Direction
         {
             public override Direction RotateRight()
             {
@@ -86,7 +69,7 @@ namespace SmellyMarsRover
             }
         }
 
-        internal record West() : Direction(WEST)
+        internal record West : Direction
         {
             public override Direction RotateRight()
             {
@@ -104,7 +87,7 @@ namespace SmellyMarsRover
             }
         }
 
-        internal record East() : Direction(EAST)
+        internal record East : Direction
         {
             public override Direction RotateRight()
             {
