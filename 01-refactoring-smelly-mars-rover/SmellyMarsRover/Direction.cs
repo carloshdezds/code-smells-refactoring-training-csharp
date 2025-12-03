@@ -46,11 +46,25 @@ namespace SmellyMarsRover
 
         public abstract Direction RotateRight();
 
+        public abstract Direction RotateLeft();
+
+        public abstract Coordinates Displace(Coordinates coordinates, int displacement);
+
         internal record North() : Direction(NORTH)
         {
             public override Direction RotateRight()
             {
                 return Create(EAST);
+            }
+
+            public override Direction RotateLeft()
+            {
+                return Create(WEST);
+            }
+
+            public override Coordinates Displace(Coordinates coordinates, int displacement)
+            {
+                return coordinates.MoveAlongY(displacement);
             }
         }
 
@@ -60,6 +74,16 @@ namespace SmellyMarsRover
             {
                 return Create(WEST);
             }
+
+            public override Direction RotateLeft()
+            {
+                return Create(EAST);
+            }
+
+            public override Coordinates Displace(Coordinates coordinates, int displacement)
+            {
+                return coordinates.MoveAlongY(-displacement);
+            }
         }
 
         internal record West() : Direction(WEST)
@@ -68,6 +92,16 @@ namespace SmellyMarsRover
             {
                 return Create(NORTH);
             }
+
+            public override Direction RotateLeft()
+            {
+                return Create(SOUTH);
+            }
+
+            public override Coordinates Displace(Coordinates coordinates, int displacement)
+            {
+                return coordinates.MoveAlongX(-displacement);
+            }
         }
 
         internal record East() : Direction(EAST)
@@ -75,6 +109,16 @@ namespace SmellyMarsRover
             public override Direction RotateRight()
             {
                 return Create(SOUTH);
+            }
+
+            public override Direction RotateLeft()
+            {
+                return Create(NORTH);
+            }
+
+            public override Coordinates Displace(Coordinates coordinates, int displacement)
+            {
+                return coordinates.MoveAlongX(displacement);
             }
         }
     }

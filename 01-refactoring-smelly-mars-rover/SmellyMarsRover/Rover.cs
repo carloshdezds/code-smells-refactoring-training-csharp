@@ -25,52 +25,18 @@ namespace SmellyMarsRover
                 }
                 else if (command.Equals("l"))
                 {
-                    // Rotate Rover Left
-                    if (_direction.IsFacingNorth())
-                    {
-                        _direction = Direction.Create("W");
-                    }
-                    else if (_direction.IsFacingSouth())
-                    {
-                        _direction = Direction.Create("E");
-                    }
-                    else if (_direction.IsFacingWest())
-                    {
-                        _direction = Direction.Create("S");
-                    }
-                    else
-                    {
-                        _direction = Direction.Create("N");
-                    }
+                    _direction = _direction.RotateLeft();
                 }
                 else
                 {
-                    // Displace Rover
-                    var displacement1 = -1;
+                    var displacement = -1;
 
                     if (command.Equals("f"))
                     {
-                        displacement1 = 1;
+                        displacement = 1;
                     }
 
-                    var displacement = displacement1;
-
-                    if (_direction.IsFacingNorth())
-                    {
-                        _coordinates = _coordinates.MoveAlongY(displacement);
-                    }
-                    else if (_direction.IsFacingSouth())
-                    {
-                        _coordinates = _coordinates.MoveAlongY(-displacement);
-                    }
-                    else if (_direction.IsFacingWest())
-                    {
-                        _coordinates = _coordinates.MoveAlongX(-displacement);
-                    }
-                    else
-                    {
-                        _coordinates = _coordinates.MoveAlongX(displacement);
-                    }
+                    _coordinates = _direction.Displace(_coordinates, displacement);
                 }
             }
         }
