@@ -16,5 +16,10 @@ namespace SmellyMarsRover
         {
             return Value.Equals("N");
         }
+
+        public static Direction Create(string direction)
+        {
+            return new Direction(direction);
+        }
     }
 }
