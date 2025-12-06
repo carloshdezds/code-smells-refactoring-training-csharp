@@ -1,108 +1,107 @@
-namespace SmellyMarsRover
+namespace SmellyMarsRover;
+
+internal abstract record Direction
 {
-    internal abstract record Direction
+    private const string NORTH = "N";
+    private const string SOUTH = "S";
+    private const string WEST = "W";
+    private const string EAST = "E";
+
+    public static Direction Create(string directionEncoding)
     {
-        private const string NORTH = "N";
-        private const string SOUTH = "S";
-        private const string WEST = "W";
-        private const string EAST = "E";
-
-        public static Direction Create(string directionEncoding)
+        if (directionEncoding.Equals(NORTH))
         {
-            if (directionEncoding.Equals(NORTH))
-            {
-                return new North();
-            }
-
-            if (directionEncoding.Equals(SOUTH))
-            {
-               return new South();
-            }
-
-            if (directionEncoding.Equals(WEST))
-            {
-                return new West();
-            }
-
-            return new East();
+            return new North();
         }
 
-        public abstract Direction RotateRight();
-
-        public abstract Direction RotateLeft();
-
-        public abstract Coordinates Displace(Coordinates coordinates, int displacement);
-
-        internal record North : Direction
+        if (directionEncoding.Equals(SOUTH))
         {
-            public override Direction RotateRight()
-            {
-                return Create(EAST);
-            }
-
-            public override Direction RotateLeft()
-            {
-                return Create(WEST);
-            }
-
-            public override Coordinates Displace(Coordinates coordinates, int displacement)
-            {
-                return coordinates.MoveAlongY(displacement);
-            }
+           return new South();
         }
 
-        internal record South : Direction
+        if (directionEncoding.Equals(WEST))
         {
-            public override Direction RotateRight()
-            {
-                return Create(WEST);
-            }
-
-            public override Direction RotateLeft()
-            {
-                return Create(EAST);
-            }
-
-            public override Coordinates Displace(Coordinates coordinates, int displacement)
-            {
-                return coordinates.MoveAlongY(-displacement);
-            }
+            return new West();
         }
 
-        internal record West : Direction
+        return new East();
+    }
+
+    public abstract Direction RotateRight();
+
+    public abstract Direction RotateLeft();
+
+    public abstract Coordinates Displace(Coordinates coordinates, int displacement);
+
+    internal record North : Direction
+    {
+        public override Direction RotateRight()
         {
-            public override Direction RotateRight()
-            {
-                return Create(NORTH);
-            }
-
-            public override Direction RotateLeft()
-            {
-                return Create(SOUTH);
-            }
-
-            public override Coordinates Displace(Coordinates coordinates, int displacement)
-            {
-                return coordinates.MoveAlongX(-displacement);
-            }
+            return Create(EAST);
         }
 
-        internal record East : Direction
+        public override Direction RotateLeft()
         {
-            public override Direction RotateRight()
-            {
-                return Create(SOUTH);
-            }
+            return Create(WEST);
+        }
 
-            public override Direction RotateLeft()
-            {
-                return Create(NORTH);
-            }
+        public override Coordinates Displace(Coordinates coordinates, int displacement)
+        {
+            return coordinates.MoveAlongY(displacement);
+        }
+    }
 
-            public override Coordinates Displace(Coordinates coordinates, int displacement)
-            {
-                return coordinates.MoveAlongX(displacement);
-            }
+    internal record South : Direction
+    {
+        public override Direction RotateRight()
+        {
+            return Create(WEST);
+        }
+
+        public override Direction RotateLeft()
+        {
+            return Create(EAST);
+        }
+
+        public override Coordinates Displace(Coordinates coordinates, int displacement)
+        {
+            return coordinates.MoveAlongY(-displacement);
+        }
+    }
+
+    internal record West : Direction
+    {
+        public override Direction RotateRight()
+        {
+            return Create(NORTH);
+        }
+
+        public override Direction RotateLeft()
+        {
+            return Create(SOUTH);
+        }
+
+        public override Coordinates Displace(Coordinates coordinates, int displacement)
+        {
+            return coordinates.MoveAlongX(-displacement);
+        }
+    }
+
+    internal record East : Direction
+    {
+        public override Direction RotateRight()
+        {
+            return Create(SOUTH);
+        }
+
+        public override Direction RotateLeft()
+        {
+            return Create(NORTH);
+        }
+
+        public override Coordinates Displace(Coordinates coordinates, int displacement)
+        {
+            return coordinates.MoveAlongX(displacement);
         }
     }
 }

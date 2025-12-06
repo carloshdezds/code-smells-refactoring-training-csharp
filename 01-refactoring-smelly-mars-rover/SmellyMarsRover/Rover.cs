@@ -1,67 +1,66 @@
 using System;
 
-namespace SmellyMarsRover
+namespace SmellyMarsRover;
+
+public class Rover
 {
-    public class Rover
+    private Direction _direction;
+    private Coordinates _coordinates;
+
+    public Rover(int x, int y, string direction)
     {
-        private Direction _direction;
-        private Coordinates _coordinates;
+        _direction = Direction.Create(direction);
+        _coordinates = new Coordinates(x, y);
+    }
 
-        public Rover(int x, int y, string direction)
+    public void Receive(string commandsSequence)
+    {
+        for (var i = 0; i < commandsSequence.Length; ++i)
         {
-            _direction = Direction.Create(direction);
-            _coordinates = new Coordinates(x, y);
-        }
+            var command = commandsSequence.Substring(i, 1);
 
-        public void Receive(string commandsSequence)
-        {
-            for (var i = 0; i < commandsSequence.Length; ++i)
+            if (command.Equals("r"))
             {
-                var command = commandsSequence.Substring(i, 1);
+                _direction = _direction.RotateRight();
+            }
+            else if (command.Equals("l"))
+            {
+                _direction = _direction.RotateLeft();
+            }
+            else
+            {
+                var displacement = -1;
 
-                if (command.Equals("r"))
+                if (command.Equals("f"))
                 {
-                    _direction = _direction.RotateRight();
+                    displacement = 1;
                 }
-                else if (command.Equals("l"))
-                {
-                    _direction = _direction.RotateLeft();
-                }
-                else
-                {
-                    var displacement = -1;
 
-                    if (command.Equals("f"))
-                    {
-                        displacement = 1;
-                    }
-
-                    _coordinates = _direction.Displace(_coordinates, displacement);
-                }
+                _coordinates = _direction.Displace(_coordinates, displacement);
             }
         }
+    }
 
-        protected bool Equals(Rover other)
-        {
-            return Equals(_direction, other._direction) && Equals(_coordinates, other._coordinates);
-        }
+    protected bool Equals(Rover other)
+    {
+        return Equals(_direction, other._direction) && Equals(_coordinates, other._coordinates);
+    }
 
-        public override bool Equals(object obj)
-        {
-            if (obj is null) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((Rover)obj);
-        }
+    public override bool Equals(object obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != GetType()) return false;
+        return Equals((Rover)obj);
+    }
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(_direction, _coordinates);
-        }
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(_direction, _coordinates);
+    }
 
-        public override string ToString()
-        {
-            return $"{nameof(_direction)}: {_direction}, {nameof(_coordinates)}: {_coordinates}";
-        }
+    public override string ToString()
+    {
+        return $"{nameof(_direction)}: {_direction}, {nameof(_coordinates)}: {_coordinates}";
     }
 }
