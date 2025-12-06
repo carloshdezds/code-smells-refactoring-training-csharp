@@ -4,6 +4,7 @@ namespace SmellyMarsRover;
 
 public class Rover
 {
+    private const int Displacement = 1;
     private Direction _direction;
     private Coordinates _coordinates;
 
@@ -27,16 +28,13 @@ public class Rover
             {
                 _direction = _direction.RotateLeft();
             }
+            else if (command.Equals("f"))
+            {
+                _coordinates = _direction.Displace(_coordinates, Displacement);
+            }
             else
             {
-                var displacement = -1;
-
-                if (command.Equals("f"))
-                {
-                    displacement = 1;
-                }
-
-                _coordinates = _direction.Displace(_coordinates, displacement);
+                _coordinates = _direction.Displace(_coordinates, -Displacement);
             }
         }
     }
