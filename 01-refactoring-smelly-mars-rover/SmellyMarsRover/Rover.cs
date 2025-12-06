@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SmellyMarsRover;
 
@@ -17,28 +18,8 @@ public class Rover
 
     public void Receive(string commandsSequence)
     {
-        var commands = ExtractCommands(commandsSequence);
-        Execute(commands);
-    }
-
-    private static IList<string> ExtractCommands(string commandsSequence)
-    {
-        IList<string> commands = new List<string>();
-        for (var i = 0; i < commandsSequence.Length; ++i)
-        {
-            var command = commandsSequence.Substring(i, 1);
-            commands.Add(command);
-        }
-
-        return commands;
-    }
-
-    private void Execute(IList<string> commands)
-    {
-        foreach (var command in commands)
-        {
-            Execute(command);
-        }
+        var commands = (IList<string>)commandsSequence.Select(Char.ToString).ToList();
+        commands.ToList().ForEach(Execute);
     }
 
     private void Execute(string command)
