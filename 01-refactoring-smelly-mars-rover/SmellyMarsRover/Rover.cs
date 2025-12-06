@@ -18,7 +18,7 @@ public class Rover
 
     public void Receive(string commandsSequence)
     {
-        var commands = (IList<string>)commandsSequence.Select(Char.ToString).ToList();
+        var commands = commandsSequence.Select(Char.ToString).ToList();
         commands.ToList().ForEach(Execute);
     }
 
