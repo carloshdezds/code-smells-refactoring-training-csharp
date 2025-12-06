@@ -9,7 +9,7 @@ public class Rover
 
     public Rover(int x, int y, string direction)
     {
-        _direction = Direction.Create(direction);
+        _direction = DirectionMapper.Create(direction);
         _coordinates = new Coordinates(x, y);
     }
 

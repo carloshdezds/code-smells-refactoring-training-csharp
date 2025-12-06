@@ -2,47 +2,22 @@ namespace SmellyMarsRover;
 
 internal abstract record Direction
 {
-    private const string NORTH = "N";
-    private const string SOUTH = "S";
-    private const string WEST = "W";
-    private const string EAST = "E";
-
-    public static Direction Create(string directionEncoding)
-    {
-        if (directionEncoding.Equals(NORTH))
-        {
-            return CreateNorth();
-        }
-
-        if (directionEncoding.Equals(SOUTH))
-        {
-           return CreateSouth();
-        }
-
-        if (directionEncoding.Equals(WEST))
-        {
-            return CreateWest();
-        }
-
-        return CreateEast();
-    }
-
-    private static Direction CreateNorth()
+    internal static Direction CreateNorth()
     {
         return new North();
     }
 
-    private static Direction CreateSouth()
+    internal static Direction CreateSouth()
     {
         return new South();
     }
 
-    private static Direction CreateWest()
+    internal static Direction CreateWest()
     {
         return new West();
     }
 
-    private static Direction CreateEast()
+    internal static Direction CreateEast()
     {
         return new East();
     }
