@@ -19,6 +19,7 @@ public class AcceptanceTest
     private class EmailGreetingSenderForTesting : EmailGreetingSender
     {
         private readonly List<MailMessage> _messagesSent;
+        
 
         public EmailGreetingSenderForTesting(List<MailMessage> messagesSent, int smtpPort, string smtpHost, string sender) : base(smtpHost, smtpPort, sender)
         {
