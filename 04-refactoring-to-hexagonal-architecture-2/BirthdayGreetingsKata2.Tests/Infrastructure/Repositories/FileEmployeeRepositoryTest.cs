@@ -1,7 +1,8 @@
+using System.Collections.Generic;
 using BirthdayGreetingsKata2.Core;
 using BirthdayGreetingsKata2.Infrastructure.Repositories;
 using NUnit.Framework;
-
+using static BirthdayGreetingsKata2.Tests.helpers.OurDateFactory;
 
 namespace BirthdayGreetingsKata2.Tests.Infrastructure.Repositories;
 
@@ -13,6 +14,20 @@ public class FileEmployeeRepositoryTest
         IEmployeesRepository employeesRepository = new FileEmployeesRepository("non-existing.file");
 
         Assert.Throws<CannotReadEmployeesException>(() => employeesRepository.GetAll());
+    }
+    
+    [Test]
+    public void Get_Employees_From_File()
+    {
+        IEmployeesRepository employeesRepository = new FileEmployeesRepository("Infrastructure/Repositories/EmployeeData.txt");
+
+        var employees = employeesRepository.GetAll();
+        
+        Assert.That(employees, Is.EqualTo(new List<Employee>()
+        {
+            new Employee("John", "Doe", OurDate("1982/10/08"), "john.doe@foobar.com"),
+            new Employee("Mary", "Ann", OurDate("1975/03/11"), "mary.ann@foobar.com")
+        }));
     }
 
     [Test]
