@@ -21,32 +21,36 @@ public class EmailGreetingSender : GreetingSender
     {
         foreach (var message in messages)
         {
-            var recipient = message.To();
-            var body = message.Text();
-            var subject = message.Subject();
-            SendMessage(subject, body, recipient);
+            SendMessage(message);
         }
     }
 
-    private void SendMessage(string subject, string body, string recipient)
+    private void SendMessage(GreetingMessage message)
     {
-        // Create a mail session
+        var smtpClient = CreateMailSession();
+        var msg = ConstructMessage(message);
+        SendMessage(msg, smtpClient);
+    }
+
+    private MailMessage ConstructMessage(GreetingMessage message)
+    {
+        var msg = new MailMessage
+        {
+            From = new MailAddress(_sender),
+            Subject = message.Subject(),
+            Body = message.Text()
+        };
+        msg.To.Add(message.To());
+        return msg;
+    }
+
+    private SmtpClient CreateMailSession()
+    {
         var smtpClient = new SmtpClient(_smtpHost)
         {
             Port = _smtpPort
         };
-
-        // Construct the message
-        var msg = new MailMessage
-        {
-            From = new MailAddress(_sender),
-            Subject = subject,
-            Body = body
-        };
-        msg.To.Add(recipient);
-
-        // Send the message
-        SendMessage(msg, smtpClient);
+        return smtpClient;
     }
 
     protected virtual void SendMessage(MailMessage msg, SmtpClient smtpClient)
