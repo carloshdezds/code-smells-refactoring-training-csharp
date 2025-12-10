@@ -13,12 +13,13 @@ public class App
 
     static void Main(string[] args)
     {
+        var emailGreetingSender = new EmailGreetingSender(Host, SmtpPort, SenderEmailAddress);
         var service = new BirthdayService(
-            new FileEmployeesRepository(EmployeesFilePath));
+            new FileEmployeesRepository(EmployeesFilePath), emailGreetingSender);
         try
         {
             var today = new OurDate(new DateTime());
-            service.SendGreetings(today, Host, SmtpPort, SenderEmailAddress);
+            service.SendGreetings(today);
         }
         catch (Exception e)
         {

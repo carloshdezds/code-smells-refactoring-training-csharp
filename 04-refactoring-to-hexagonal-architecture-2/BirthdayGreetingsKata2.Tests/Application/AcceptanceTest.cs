@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Net.Mail;
 using BirthdayGreetingsKata2.Application;
-using BirthdayGreetingsKata2.Core;
 using BirthdayGreetingsKata2.Infrastructure.Repositories;
 using NUnit.Framework;
 using static BirthdayGreetingsKata2.Tests.helpers.OurDateFactory;
@@ -17,19 +16,18 @@ public class AcceptanceTest
     private BirthdayService _service;
     private const string EmployeesFilePath = "Application/employee_data.txt";
 
-    private class BirthdayServiceForTesting : BirthdayService
+    private class EmailGreetingSenderForTesting : EmailGreetingSender
     {
-        private readonly List<MailMessage> _messages;
+        private readonly List<MailMessage> _messagesSent;
 
-        public BirthdayServiceForTesting(List<MailMessage> messages, IEmployeesRepository employeesRepository) : base(
-            employeesRepository)
+        public EmailGreetingSenderForTesting(List<MailMessage> messagesSent, int smtpPort, string smtpHost, string sender) : base(smtpHost, smtpPort, sender)
         {
-            _messages = messages;
+            _messagesSent = messagesSent;
         }
 
         protected override void SendMessage(MailMessage msg, SmtpClient smtpClient)
         {
-            _messages.Add(msg);
+            _messagesSent.Add(msg);
         }
     }
 
@@ -37,8 +35,8 @@ public class AcceptanceTest
     public void SetUp()
     {
         _messagesSent = new List<MailMessage>();
-        _service = new BirthdayServiceForTesting(_messagesSent,
-            new FileEmployeesRepository(EmployeesFilePath));
+        var emailGreetingSender = new EmailGreetingSenderForTesting(_messagesSent, SmtpPort, SmtpHost, From);
+        _service = new BirthdayService(new FileEmployeesRepository(EmployeesFilePath), emailGreetingSender);
     }
 
     [Test]
@@ -46,7 +44,7 @@ public class AcceptanceTest
     {
         var today = OurDate("2008/10/08");
 
-        _service.SendGreetings(today, SmtpHost, SmtpPort, From);
+        _service.SendGreetings(today);
 
         Assert.That(_messagesSent, Has.Exactly(1).Items);
         var message = _messagesSent[0];
@@ -61,7 +59,7 @@ public class AcceptanceTest
     {
         var today = OurDate("2008/01/01");
 
-        _service.SendGreetings(today, SmtpHost, SmtpPort, From);
+        _service.SendGreetings(today);
 
         Assert.That(_messagesSent, Is.Empty);
     }
